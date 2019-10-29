@@ -2,19 +2,52 @@
 <head>
 <title>Batavierenrace Twitter Dashboard</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script src="/lib/jquery-2.1.1.min.js"></script> <!--removing one of the jquery works-->
+
+<!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script-->
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link rel="stylesheet" href="/style/layout.css"/>
 <link rel="stylesheet" href="/style/theme.css"/>
+
+
+
+
+
+
 <script src="/lib/jquery.flot.min.js"></script>
 <script src="/lib/core.js"></script>
 <script src="/lib/charts.js"></script>
+<script src="/lib/jqcloud-1.0.4.js"></script>
+<script src="/lib/wordcloud.js"></script>
+<script src="/lib/tweets.js"></script>
+<script src="/lib/form.js"></script>
 <script src="/lib/log.js"></script>
+<script src="/lib/jquery.flot.categories.min.js"></script>
+<script src="/lib/jquery.flot.pie.js"></script>
+<script src="/lib/visuals.js"></script>
 
 </head>
-<body>
+
+<style>
+.darkmode {
+    background: #0d0d0d;
+    color: #e6e6e6;
+    border-color: #e6e6e6;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+</style>
+<body class='container_12'>
 	<div class="container-fluid">
 		<div class="row">
 			
@@ -22,20 +55,19 @@
 				<div class="container-fluid">
 					<ul class="nav nav-tabs">
 					  <li class="nav-item">
-						<a class="nav-link active" href="#">Wordcloud</a>
+						<a id="btn_cloud" class="nav-link active" href="#">Wordcloud</a>
 					  </li>
 					  <li class="nav-item">
-						<a class="nav-link" href="#">Geolocation</a>
+						<a id="btn_geo" class="nav-link" href="#">Geolocation</a>
 					  </li>
 					  <li class="nav-item">
-						<a class="nav-link" href="#">Graph</a>
+						<a id="btn_graph" class="nav-link" href="#">Graph</a>
 					  </li>
 					</ul>
 					
-					<div class="container">
-						<h2>Content</h2>
-						<div id="graph" class="grid_8 vert_8"></div>
-					</div>
+					<div id="visuals"></div>
+
+					
 				</div>
 				
 			</div>
@@ -54,10 +86,36 @@
 					<a>
 						<i class="fas fa-cog"></i>
 					</a>
+					<a id="darkmode" href="#">DARK MODE</a>
+
+						<div id="debug" class="grid_8 vert_1"></div>
+						<div id="tweet" class="grid_8 vert_8"></div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+<div class="Geolocation" style="display:none">
+    <h1>Loc</h1>
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis sapien in ornare dictum. Ut ultricies fermentum massa, non egestas nisl ornare ut. Integer lacus mi, sodales sit amet leo at, posuere tempor felis. Fusce ligula ipsum, varius sed laoreet eu, ultricies vitae nunc. Nam vitae convallis quam. Integer turpis.
+    </p>
+    </div>
+    
+    <div class="Wordcloud" style="display:none">
+    <h2>Cloud</h2>
+    <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis sapien in ornare dictum. Ut ultricies fermentum massa, non egestas nisl ornare ut. Integer lacus mi, sodales sit amet leo at, posuere tempor felis. Fusce ligula ipsum, varius sed laoreet eu, ultricies vitae nunc. Nam vitae convallis quam. Integer turpis.
+    </p>
+    </div>
+    
+    	<div class="Graph" style="display:none">
+    <h3>Graph</h3>
+	<div id="graph" class="grid_8 vert_8"></div>
+    </div>
+</body>
+
 <script>
 	// create a rolling chart block
 	block('#graph').rolling_chart({
@@ -76,5 +134,19 @@
 	// connect sample event to graph
 	events.connect('sample', '#graph');
 </script>
-</body>
+
+<script>
+	block('#debug').log({
+		memory: 20	
+	});
+	events.connect('debug','#debug');
+</script>
+
+<script>
+	block('#tweet').tweets({
+		memory: 20	
+	});
+	events.connect('tweet','#tweet');
+</script>
+
 </html>
