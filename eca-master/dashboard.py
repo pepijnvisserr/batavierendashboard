@@ -31,7 +31,6 @@ def generate_sample(ctx, e):
     # base sample on previous one
     sample = clip(0, ctx.counttweets, 100)
     # emit to outside world
-
     if (sample == 0):
     	sample = 0.0000000000001
     emit('sample',{

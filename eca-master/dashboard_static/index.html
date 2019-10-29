@@ -46,6 +46,11 @@
     -o-transition: all 0.25s ease;
     transition: all 0.25s ease;
 }
+.invisible {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
 </style>
 <body class='container_12'>
 	<div class="container-fluid">
@@ -64,10 +69,26 @@
 						<a id="btn_graph" class="nav-link" href="#">Graph</a>
 					  </li>
 					</ul>
-					
-					<div id="visuals"></div>
-
-					
+					<div id="visuals">
+						<div class="Geolocation">
+						    <h1>Geolocation</h1>
+						    <p>
+						    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis sapien in ornare dictum. Ut ultricies fermentum massa, non egestas nisl ornare ut. Integer lacus mi, sodales sit amet leo at, posuere tempor felis. Fusce ligula ipsum, varius sed laoreet eu, ultricies vitae nunc. Nam vitae convallis quam. Integer turpis.
+						    </p>
+						    </div>
+						    
+						<div class="Wordcloud">
+						    <h2>Wordcloud</h2>
+						    <p>
+						    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis sapien in ornare dictum. Ut ultricies fermentum massa, non egestas nisl ornare ut. Integer lacus mi, sodales sit amet leo at, posuere tempor felis. Fusce ligula ipsum, varius sed laoreet eu, ultricies vitae nunc. Nam vitae convallis quam. Integer turpis.
+						    </p>
+						    </div>
+						    
+						<div class="Graph">
+						    <h3>Graph</h3>
+							<div id="graph" class="grid_8 vert_8"></div>
+						    </div>
+					</div>
 				</div>
 				
 			</div>
@@ -88,7 +109,6 @@
 					</a>
 					<a id="darkmode" href="#">DARK MODE</a>
 
-						<div id="debug" class="grid_8 vert_1"></div>
 						<div id="tweet" class="grid_8 vert_8"></div>
 				</div>
 			</div>
@@ -96,25 +116,8 @@
 	</div>
 
 
-<div class="Geolocation" style="display:none">
-    <h1>Loc</h1>
-    <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis sapien in ornare dictum. Ut ultricies fermentum massa, non egestas nisl ornare ut. Integer lacus mi, sodales sit amet leo at, posuere tempor felis. Fusce ligula ipsum, varius sed laoreet eu, ultricies vitae nunc. Nam vitae convallis quam. Integer turpis.
-    </p>
-    </div>
-    
-    <div class="Wordcloud" style="display:none">
-    <h2>Cloud</h2>
-    <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis sapien in ornare dictum. Ut ultricies fermentum massa, non egestas nisl ornare ut. Integer lacus mi, sodales sit amet leo at, posuere tempor felis. Fusce ligula ipsum, varius sed laoreet eu, ultricies vitae nunc. Nam vitae convallis quam. Integer turpis.
-    </p>
-    </div>
-    
-    	<div class="Graph" style="display:none">
-    <h3>Graph</h3>
-	<div id="graph" class="grid_8 vert_8"></div>
-    </div>
-</body>
+
+
 
 <script>
 	// create a rolling chart block
@@ -136,17 +139,12 @@
 </script>
 
 <script>
-	block('#debug').log({
-		memory: 20	
-	});
-	events.connect('debug','#debug');
-</script>
-
-<script>
 	block('#tweet').tweets({
 		memory: 20	
 	});
 	events.connect('tweet','#tweet');
 </script>
+
+</body>
 
 </html>
