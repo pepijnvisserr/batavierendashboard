@@ -1,25 +1,23 @@
 $(document).ready(function(){
-    $("#visuals div").addClass("invisible");
-    $(".Wordcloud").removeClass("invisible");
+    $cloud     = $(".Wordcloud").html();
+    $geo    = $(".Geolocation").html();
+    $graph     = $(".Graph").html();
+    $("#visuals").html($cloud);
     
     $("#btn_cloud").click(function(){        
-            $("#visuals div").addClass("invisible");
-            $(".Wordcloud").removeClass("invisible");
+            $("#visuals").html($cloud);
             $("*li.nav-item a").removeClass("active");
             $(this).addClass("active");
     });
     
     $("#btn_geo").click(function(){
-            $("#visuals div").addClass("invisible");
-            $(".Geolocation").removeClass("invisible");
+            $("#visuals").html($geo);
             $("*li.nav-item a").removeClass("active");
             $(this).addClass("active");
     });
     
     $("#btn_graph").click(function(){
-            $("#visuals div").addClass("invisible");
-            $(".Graph").removeClass("invisible");
-            $(".Graph div").removeClass("invisible");
+            $("#visuals").html($graph);
             $("*li.nav-item a").removeClass("active");
             $(this).addClass("active");
     });

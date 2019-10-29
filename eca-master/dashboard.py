@@ -15,8 +15,8 @@ import textwrap
 @event('init')
 def setup(ctx, e):
     ctx.counttweets = 0
-    fire('sample', {'previous': 0.0})
-    start_offline_tweets('data/bata_2014.txt', time_factor=10000)
+    fire('activity')
+    start_offline_tweets('data/bata_2014.txt', time_factor=100000000)
 
 
 # define a normal Python function
@@ -24,24 +24,24 @@ def clip(lower, value, upper):
     return max(lower, min(value, upper))
 
 
-@event('sample')
+@event('activity')
 def generate_sample(ctx, e):
     
 
-    # base sample on previous one
-    sample = clip(0, ctx.counttweets, 100)
-    # emit to outside world
-    if (sample == 0):
-    	sample = 0.0000000000001
-    emit('sample',{
-        'action': 'add',
-        'value': sample
-    })
+	# base sample on previous one
+	sample = clip(0, ctx.counttweets, 400)
+	# emit to outside world
+	if (sample == 0):
+		sample = 0.0000000000001
+	emit('activity',{
+		'action': 'add',
+		'value': sample
+	})
 
 
-    ctx.counttweets = 0
-    # chain event
-    fire('sample', delay=2)
+	ctx.counttweets = 0
+	# chain event
+	fire('activity', delay=2)
 
 
 
@@ -63,6 +63,14 @@ def tweet(ctx, e):
 
 @event('tweet')
 def echo(ctx,e):
-    ctx.counttweets += 1
-    emit('tweet', e.data)
+	ctx.counttweets += 1
+	emit('tweet', e.data)
+	tweetdata = e.data
+	announcenames = {"Batavierenrace", "Overijssel_", "GelderlandNieuw"}
+	goodname = False
+	for y in announcenames:
+		if tweetdata['user']['screen_name'] == y:
+			goodname = True
 
+	if tweetdata['user']['verified'] or goodname:
+		emit('importanttweet', tweetdata)
